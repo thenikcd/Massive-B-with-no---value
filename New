@@ -24,3 +24,393 @@ int main() {
         printf("\nMax:%d", max);
 	getch();
 	return 0; }
+
+
+---
+Albinator, [5/15/19 5:21 PM]
+//
+//  main.c
+//  NLO
+//
+//  Created by Albina Blazhko on 4/23/19.
+//  Copyright © 2019 Albina Blazhko and Maha. All rights reserved.
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Road {
+    int s;
+    int e;
+    float l;
+    int a;
+    float k;
+}Troad;
+Troad p[200];
+void Ssort(int n,Troad w[]){
+    int i,k;
+    Troad u;
+    for (k=n-1;k>0;k--)
+        for (i=0;i<k;i++)
+            if (w[i].k>w[i+1].k){
+                u=w[i];
+                w[i]=w[i+1];
+                w[i+1]=u;
+            }
+}
+int main(int argc, const char * argv[]) {
+    int n=0, i=0;
+    FILE *f,*ff;
+    f=fopen("In1.txt","r");
+    if((f=fopen("In1.txt","r"))!=NULL) {
+        do {fscanf(f,"%d%d%f%d",&p[n].s,&p[n].e,&p[n].l,&p[n].a);
+            n++;
+        } while(!feof(f));                }
+    else printf("File in not found");
+    for(i=0;i<n;i++)  p[i].k=p[i].a/p[i].l;
+    
+    Ssort(n,p);
+    ff=fopen("out.txt","w");
+    if((ff=fopen("out.txt","w"))!=NULL){
+        printf("Done. To check open file out.txt\n");
+        for(i=0;i<n;i++) {
+            fprintf(ff,"%d %d %d %1.1f %1.1f",i+1,p[i].s,p[i].e,p[i].l,p[i].k);
+            fprintf(ff,"\n");
+        }                                  }
+    else printf("File out.txt not found");
+    fclose(f);
+    fclose(ff);
+    return 0;
+}
+
+Albinator, [5/15/19 5:21 PM]
+//
+//  main.c
+//  qsort
+//
+//  Created by Albina Blazshko on 5/3/19.
+//  Copyright © 2019 Albina Blazhko and Maha. All rights reserved.
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+int pr1=0, pr2=0, pr3=0, por1=0, por2=0, por3=0;
+void Bubble(int *A,int n){
+ int i,w,k;
+ 
+ for (k=n-1;k>0;k--){
+ 
+ for (i=0;i<k;i++)  {
+ if(A[i]>A[i+1]) {
+ w=A[i];A[i]=A[i+1];A[i+1]=w;
+ pr1=pr1+3 ;
+ }
+ por1+=1 ;
+ }
+ }
+ }
+
+void Shell( int *B,int n)
+{
+    int i,j,step;
+    double t;
+    for(step=n>>1;step>=1;step=step>>1)
+        for(i=step;i<n;i++)
+        {t=B[i];
+            pr2++;
+            for(j=i;j>=step;j=j-step)
+            {
+                
+                if(t<B[j-step])
+                { B[j]=B[j-step];}
+                else break;
+                pr2++;
+            }  por2++;
+            B[j]=t;
+            pr2++;
+            
+        }
+}
+void QS(int *C,int n)
+{ int i=0,j=n-1,t,p;
+    
+    p=C[n>>1];
+    pr3++;
+    do{  while(C[i]<p)i++;
+        while(C[j]>p)j--;
+        if(i<=j) {t=C[i];C[i]=C[j];C[j]=t;i++;j--;
+            pr3=pr3+3 ;
+        }
+        por3++;
+    } while(i<=j);
+    if(j>0) QS(C,j+1);
+    
+    if(i<n) QS(C+i,n-i);
+}
+int main(int argc, char* argv[])
+{
+    int i,n, *A1, *B2, *C3;
+    printf("N= "); scanf("%d", &n);
+    A1=(int*)calloc(n, sizeof(int));
+    B2=(int*)calloc(n, sizeof(int));
+    C3=(int*)calloc(n, sizeof(int));
+    printf("Arrays: ");
+    
+    for ( i = 0; i < n; i++)
+    {
+        scanf("%d", &A1[i]);
+        B2[i]=A1[i];
+        C3[i]=A1[i];
+    }
+    printf("Bubble  \n");
+    Bubble(A1,n); {
+        for ( i = 0; i < n; i++)
+            printf("%d ",A1[i]);
+    } printf("\n");
+    
+    printf("Shell  \n");
+    Shell (B2,n); {
+        for ( i = 0; i < n; i++)
+            printf("%d ",B2[i]);
+    } printf("\n");
+    
+    printf("QSORT  \n");
+    QS (C3,n); {
+        for ( i = 0; i < n; i++)
+            printf("%d ",C3[i]);
+    } printf("\n");
+    
+    printf("Insert:\n");
+    printf("Comparing =  %0.1d; ", por1);
+    printf("Adding = %0.1d;\n", pr1);
+    printf("Shell:\n");
+    printf("Comparing =  %0.1d; ", por2);
+    printf("Adding = %0.1d;\n", pr2);
+    printf("QSort: \n");
+    printf("Comparing =  %0.1d; ", por3);
+    printf("Adding = %0.1d;\n", pr3);
+    return 0;
+}
+
+Albinator, [5/15/19 5:22 PM]
+//
+//  main.c
+//  function
+//
+//  Created by Albina Blazshko on 4/9/19.
+//  Copyright © 2019 Albina Blazshko and Maha. All rights reserved.
+//
+
+#include <stdio.h>
+typedef struct Road {
+    int Start;
+    int End;
+    float length;
+}Troad;
+Troad *p;
+void Ssort(int n,Troad w[]){
+    int i,k;
+    Troad u;
+    for (k=n-1;k>0;k--)
+        for (i=0;i<k;i++)
+            if (w[i].length>w[i+1].length){
+                u=w[i];
+                w[i]=w[i+1];
+                w[i+1]=u;
+            }
+}
+void Matrix(Troad w[],int n, int kilk,double **b){
+    int i,j,k;
+    b=(double**)calloc (kilk,sizeof(double*));
+    for (i=0;i<kilk;i++)
+        b[i]=(double*)calloc(kilk,sizeof(double));
+    for(i=0;i<kilk;i++)
+        for(j=0;j<kilk;j++){
+            for(k=0;k<n;k++)
+                if(w[k].Start-1==i){
+                   if(w[k].End-1!=j) b[k][j]=0;
+                    else if(w[k].End-1==j) b[k][j]=w[k].length;
+                } 
+        }
+    for(i=0;i<kilk;i++){
+        printf("%d ",i+1);
+        for(j=0;j<kilk;j++){
+            printf("%d ",j+1);
+            printf("%0.1lf ",b[i][j]);
+        }
+        printf("\n");
+    }
+}
+int main(int argc, const char * argv[]) {
+    int n, i, kilme;
+    double **krosivo;
+    printf ("Inpup n: ");
+    scanf("%d", &n);
+    printf ("Inpup roads pleas: ");
+    scanf("%d", &kilme);
+    p=(Troad*)calloc(n,sizeof(Troad));
+    for(i=0;i<n;i++){
+            printf("Start point:\n");
+        scanf("%d",&p[i].Start);
+            printf("End point:\n");
+            scanf("%d",&p[i].End);
+            printf("Journey length:\n");
+            scanf("%f",&p[i].length);
+        }
+    Ssort(n,p);
+    printf("Your Journey\n");
+    Matrix(p, n, kilme, krosivo);
+//    for(i=0;i<n;i++,printf("\n")){
+//            printf("Start point: %d\n",p[i].Start);
+//            printf("End point: %d\n", p[i].End);
+//            printf("Journey length: %0.3f km\n", p[i].length);
+//        }
+    return 0;
+}
+
+Albinator, [5/15/19 5:23 PM]
+//
+//  main.c
+//  Laba
+//
+//  Created by Albina Blazshko on 4/2/19.
+//  Copyright © 2019 Albina Blazshko. All rights reserved.
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+typedef struct Coords {
+    double x, y;
+    double d;
+    struct Coords *Next;
+} TCoords;
+TCoords *St,*Pt,*Dd;
+TCoords *St1,*Pt1,*Dd1;
+double Dist(TCoords *w){
+  return  w->d=sqrt(w->x*w->x+w->y*w->y);
+}
+int main(int argc, const char * argv[]) {
+    int n,i,m;
+    printf("n= \n");
+    scanf ("%d",&n);
+    printf("m= \n");
+    scanf ("%d",&m);
+    while (getchar()!='\n');
+    St1=NULL;
+    Pt1=NULL;
+    for (i=0;i<n;i++){
+        Dd=(TCoords*)malloc(sizeof (TCoords));
+        if(St==NULL)St=Dd;
+        else Pt->Next=Dd;
+        Dd->Next=NULL;
+        printf ("coords x,y:\n");
+        scanf ("%lf%lf",&Dd->x, &Dd->y);
+        Pt=Dd;
+    }
+    printf("Queue:\n");
+    Pt=St;
+    while (Pt!=NULL){
+        printf("(%lf, %lf)",Pt->x, Pt->y);
+        printf("\n");
+        Pt=Pt->Next;
+    }
+    for (i=0;i<m;i++){
+        Dd1=(TCoords*)malloc(sizeof(TCoords));
+        printf ("coords x,y");
+        scanf("%lf%lf",&Dd1->x, &Dd1->y);
+        Dd1->d=sqrt (Dd1->x*Dd1->x+Dd1->y*Dd1->y);
+        if(St1==NULL){
+            Dd1->Next=NULL;
+            St1=Dd1;
+        }
+        else { if (Dd1->d<St1->d){
+            Dd1->Next=St;
+            St=Dd1;}
+        else {Pt1=St1;
+            while ((Pt1->Next!=NULL)&&(Pt1->Next->d<Dd1->d)) Pt1=Pt1->Next;
+            Dd1->Next=Pt1->Next;
+            Pt1->Next=Dd1;
+        }
+        }
+    }
+    printf("List:\n");
+    Pt1=St1;
+    while (Pt1!=NULL){
+        printf("(%lf, %lf)",Pt1->x, Pt1->y);
+        printf("\n");
+        Pt1=Pt1->Next;
+    }
+    Pt=St;
+    while (Pt!=NULL)
+    {
+        Dd1=(TCoords*)malloc(sizeof(TCoords));
+        Dd1->x = Pt->x; Dd1->y = Pt->y; Dd1->d = Pt->d;
+        if (St1==NULL)
+        {
+            Dd1->Next = NULL;
+            St1 = Dd1;
+        }
+        else {
+            if (Dd1->d < St1->d)
+            {
+                Dd1->Next=St1;
+                St1=Dd1;
+            }
+            else {
+                Pt1=St1;
+                while((Pt1->Next!=NULL) && (Pt1->Next->d < Dd1->d))
+                    Pt1=Pt1->Next;
+                Dd1->Next=Pt1->Next;
+                Pt1->Next=Dd1;
+            }
+        }
+        Pt=Pt->Next;
+    }
+    printf("New List \n");
+    Pt1=St1;
+    while(Pt1!=NULL)
+    {
+        printf("(%lf, %lf)\n",Pt1->x, Pt1->y, Pt1->d);
+        Pt1=Pt1->Next;
+    }
+    Pt1 = St1;
+    St1=NULL;
+    Dd1=NULL;
+    while (Pt1!=NULL){
+        int bol = 0;
+        if (Pt1->x/Pt1->y!=2)
+        {
+            if(St1==NULL)
+            {
+                St1=Pt1;
+                Dd1=Pt1;
+            }
+            else {
+                Dd1->Next=Pt1;
+                Dd1=Pt1;
+            }
+            bol=1;
+        }
+        if (Pt1->Next==NULL)
+        {
+            if(Dd1!=NULL)
+                Dd1->Next=NULL;
+        }
+        
+        TCoords *temp;
+        temp = Pt;
+        Pt1 = Pt1->Next;
+        if (!bol)free(temp);
+    }
+    
+    printf("New List without - \n");
+    Pt1=St1;
+    while(Pt1!=NULL)
+    {
+        printf("(%lf,  %lf) \n", Pt1->x, Pt1->y);
+        Pt1=Pt1->Next;
+    }
+
+    return 0;
+}
